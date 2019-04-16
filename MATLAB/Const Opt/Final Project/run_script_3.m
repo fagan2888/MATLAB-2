@@ -1,0 +1,23 @@
+%function, gradient, and hessian
+ f = @(x,y) 0.5*x^2+y^2;
+ df = @(x,y)[x 2*y]';
+ hess_f = @(x,y)[1 0;0 2];
+
+%set values
+tol = 1E-10;
+alpha_newt = 1E-4;
+beta = 0.1;
+max_iters = 100;
+
+alpha_grad = 0.5;
+p = 0.5;
+c = 0.5;
+
+%set initial guess and bound constraints
+z_0 = [0.5 0.5]';
+l = [-1 -1]'; 
+u = [1 1]';
+
+[y1,z1] = proj_newt(z_0,f,df,hess_f,u,l,max_iters,tol,alpha_newt,beta);
+
+[y2,z2] = proj_grad(z_0, f, df, u, l, alpha_grad, p, c, max_iters, tol);
